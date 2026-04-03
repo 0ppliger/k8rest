@@ -12,9 +12,24 @@ spec:
       labels:
         app: k8rest
     spec:
+      volumes:
+      - name: env-configmap
+        configMap:
+          name: env-configmap
       containers:
       - name: k8rest
-        image: k8rest:1.0.0
+        image: k8rest:1.0.2
         imagePullPolicy: Never
         ports:
         - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: env-configmap
+        volumeMounts:
+        - name: env-configmap
+          mountPath: /etc/k8rest
+          readOnly: true
+  strategy:
+   type: RollingUpdate
+   rollingUpdate:
+     maxUnavailable: 1

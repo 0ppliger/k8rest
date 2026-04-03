@@ -1,5 +1,27 @@
 services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: k8rest
+      POSTGRES_USER: k8rest
+      POSTGRES_PASSWORD: k8rest
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
   api:
-    image: k8rest:latest
+    image: k8rest:1.0.1
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: k8rest
+      DB_USER: k8rest
+      DB_PASSWORD: k8rest
     ports:
       - "8000:8000"
+
+volumes:
+  db_data:
