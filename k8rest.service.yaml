@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8rest-service
+spec:
+  type: ClusterIP
+  selector:
+    app: k8rest
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

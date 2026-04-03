@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8rest-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8rest
+  template:
+    metadata:
+      labels:
+        app: k8rest
+    spec:
+      containers:
+      - name: k8rest
+        image: k8rest:1.0.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
